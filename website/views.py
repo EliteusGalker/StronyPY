@@ -100,18 +100,33 @@ def chatHome():
             email = ""
             name = "Niezal"
 
-        
-        
+            
         RodzajUmowy = request.form.get("RodzajUmowy")
         
-        room = generate_unique_code(4)
+        if current_user.is_authenticated and name == "2_Bartek":
+            if len(rooms) > 1 and "4441" in rooms:
+                for key in rooms.keys():
+                    if key != "4441":
+                        room = key
+                        break
+            else:
+                print("No Rooms")
+                flash('No Rooms.', category='error')
+                return redirect(url_for("views.wybierz"))
+                
+        else:
+            room = generate_unique_code(4)
+            rooms[room] = {"members": 0, "messages": []}
+            print("Room codes after adding a new room:", list(rooms.keys()))
+            
+        
+        
         
         rooms[room] = {"members": 0, "messages": []}
         
 
         session["RodzajUmowy"] = RodzajUmowy
         session["email"] = email
-        
         session["room"] = room
         session["name"] = name
 
@@ -121,9 +136,10 @@ def chatHome():
 
 
 
-@views.route("/room")
+@views.route("/room", methods=["POST", "GET"])
 def room():
-    email = room = session.get("email")
+    
+    email = session.get("email")
     room = session.get("room")
     RodzajUmowy = session.get("RodzajUmowy")
     name = session.get("name")
@@ -131,5 +147,39 @@ def room():
         return redirect(url_for("views.wybierz"))
 
     return render_template("umowa.html",  RodzajUmowy = RodzajUmowy, messages=rooms[room]["messages"],  user=current_user, name=name, email=email, room=room)
+
+
+@views.route("/waitingRoom", methods=["POST", "GET"])
+def waitingRoom():
+    session.clear()
+    if request.method == "POST": # Zmienić na Post
+
+
+        AuthKey = request.form.get("AuthKey")
+        
+        session["room"] = "4441"
+        
+
+        email = session.get("email")
+        room = "4441"
+        rooms[room] = {"members": 0, "messages": []}
+        
+        
+        name = session.get("name")
+        if AuthKey != "xd12345": # ZMIENIĆ NA != nie równa się xd
+            print("redirecting na views po nieudanym WaitingRoom Post")
+            return redirect(url_for("views.wybierz"))
+            
+        
+        print("Bartek w poczekalni lista rooms:", list(rooms.keys()))
+        return render_template("room.html", messages=rooms[room]["messages"],  user=current_user, name=name, email=email, room=room)
+    
+    else: 
+        print("False")
+        return redirect(url_for("views.wybierz"))
+        
+
+
+
 
 

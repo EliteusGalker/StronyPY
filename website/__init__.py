@@ -27,10 +27,6 @@ def create_app():
     from .models import User, Note, rooms
     
    
-
-
-
-
     @socketio.on("connect")
     def connect(auth):
         room = session.get("room")
@@ -38,6 +34,7 @@ def create_app():
         
         join_room(room)
         send({"name": name, "message": "has entered the room"}, to=room)
+        send({"name": name, "message": f"{name} has entered the room {room}"}, to="4441")
         rooms[room]["members"] += 1
         print(f"{name} joined room {room}")
 
@@ -49,11 +46,15 @@ def create_app():
 
         if room in rooms:
             rooms[room]["members"] -= 1
-            if rooms[room]["members"] <= 0:
-                
+            if rooms[room]["members"] <= 0 or name == "2_Bartek":
+                del rooms[room]
+                send({"message": "The room has been deleted because Bartek left"}, to=room)
+                print(f"{name} has left the room {room}, and the room has been deleted.")
+                print("Room codes after deleting a room:", list(rooms.keys()))
                 print("KONIEC")
     
         send({"name": name, "message": "has left the room"}, to=room)
+        print("Room codes after deleting a room:", list(rooms.keys()))
         print(f"{name} has left the room {room}")
 
     @socketio.on("message")
@@ -68,9 +69,19 @@ def create_app():
             "message": data["data"]
         }
         send(content, to=room)
+       
+        
         rooms[room]["messages"].append(content)
         print(f"{session.get('name')} said: {data['data']}")
+    
+    @socketio.on('connect', namespace='/wait')
+    def handle_connect():
+        print('WebSocket Client Connected')
 
+    @socketio.on('disconnect', namespace='/wait')
+    def handle_disconnect():
+        print('WebSocket Client Disconnected')
+   
 
 
 
@@ -92,4 +103,8 @@ def create_database(app):
     if not path.exists('website/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
+
+
+
+
  
