@@ -149,34 +149,7 @@ def room():
     return render_template("umowa.html",  RodzajUmowy = RodzajUmowy, messages=rooms[room]["messages"],  user=current_user, name=name, email=email, room=room)
 
 
-@views.route("/waitingRoom", methods=["POST", "GET"])
-def waitingRoom():
-    session.clear()
-    if request.method == "POST": # Zmienić na Post
 
-
-        AuthKey = request.form.get("AuthKey")
-        
-        session["room"] = "4441"
-        
-
-        email = session.get("email")
-        room = "4441"
-        rooms[room] = {"members": 0, "messages": []}
-        
-        
-        name = session.get("name")
-        if AuthKey != "xd12345": # ZMIENIĆ NA != nie równa się xd
-            print("redirecting na views po nieudanym WaitingRoom Post")
-            return redirect(url_for("views.wybierz"))
-            
-        
-        print("Bartek w poczekalni lista rooms:", list(rooms.keys()))
-        return render_template("room.html", messages=rooms[room]["messages"],  user=current_user, name=name, email=email, room=room)
-    
-    else: 
-        print("False")
-        return redirect(url_for("views.wybierz"))
         
 
 

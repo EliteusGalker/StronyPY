@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
@@ -29,20 +29,44 @@ def create_app():
    
     @socketio.on("connect")
     def connect(auth):
-        room = session.get("room")
-        name = session.get("name")
+        auth_key = request.headers.get('HTTP_AUTH_KEY')
+        
+        if auth_key == '12345':
+            print("jest Auth Good :D")
+            print(request.headers.get('room'))
+            room = request.headers.get('room')
+            name = request.headers.get('name')
+            rooms[room] = {"members": 0, "messages": []}
+        else:
+            room = session.get("room")
+            name = session.get("name")
         
         join_room(room)
+        if room == '4441':
+            BartekCzeka = True
+            print("BartekCzekaTrue")
+
         send({"name": name, "message": "has entered the room"}, to=room)
-        send({"name": name, "message": f"{name} has entered the room {room}"}, to="4441")
+        send({"name": name, "message": f"{name} has entered the room *{room}*"}, to="4441")
         rooms[room]["members"] += 1
         print(f"{name} joined room {room}")
 
     @socketio.on("disconnect")
     def disconnect():
-        room = session.get("room")
-        name = session.get("name")
+        auth_key = request.headers.get('HTTP_AUTH_KEY')
+
+        if auth_key == '12345':
+            room = request.headers.get('room')
+            name = request.headers.get('name')
+        else:
+            room = session.get("room")
+            name = session.get("name")
+        
+        
         leave_room(room)
+        if room == '4441':
+            BartekCzeka = False
+            print("BartekCzekaFalse")
 
         if room in rooms:
             rooms[room]["members"] -= 1
@@ -54,34 +78,51 @@ def create_app():
                 print("KONIEC")
     
         send({"name": name, "message": "has left the room"}, to=room)
+        send({"name": name, "message": f"has left the room {room}"}, to="4441")
         print("Room codes after deleting a room:", list(rooms.keys()))
         print(f"{name} has left the room {room}")
 
+
     @socketio.on("message")
     def message(data):
-        room = session.get("room")
+        auth_key = request.headers.get('HTTP_AUTH_KEY')
+        
+        if auth_key == '12345':
+            
+            print(request.headers.get('room'))
+            room = request.headers.get('room')
+            
+        else:
+            
+            room = session.get("room")
+        
         if room not in rooms:
             return
             print("xd")
-    
-        content = {
-            "name": session.get("name"),
-            "message": data["data"]
-        }
-        send(content, to=room)
-       
-        
-        rooms[room]["messages"].append(content)
-        print(f"{session.get('name')} said: {data['data']}")
-    
-    @socketio.on('connect', namespace='/wait')
-    def handle_connect():
-        print('WebSocket Client Connected')
 
-    @socketio.on('disconnect', namespace='/wait')
-    def handle_disconnect():
-        print('WebSocket Client Disconnected')
-   
+        if auth_key == '12345':
+            content = {
+                "name": request.headers.get('name'),
+                "message": data.get('message', '')
+            }
+            
+
+
+
+            
+            send(content, to=room)
+            rooms[room]["messages"].append(content)
+            print(content)
+
+        else:
+            content = {
+                "name": session.get("name"),
+                "message": data["data"]  # Use data.get() to safely access the message
+            }
+            send(content, to=room)
+            rooms[room]["messages"].append(content)
+            print(f"{session.get('name')} said: {data['data']}")    
+ 
 
 
 
