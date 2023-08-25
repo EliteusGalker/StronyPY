@@ -28,9 +28,13 @@ def on_message(data):
             print("jest %")
             substrings = message.split(", ")
             print(substrings)
-            
+            email = substrings[0].replace("%", "")
+            znak = substrings[1].replace("%", "")
+            numer = substrings[2].replace("%", "")
+            umowa = substrings[3].replace("%", "")
             room = substrings[4].replace("@", "")
-            print(room)
+            print(room, email, znak, numer, umowa)
+            
             message2 = {"name": "2_Bartek", "message": f"jestem#{room}#"}
             sio.emit('message', message2)
         else:
