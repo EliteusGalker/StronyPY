@@ -23,7 +23,18 @@ def on_message(data):
             message1 = {"name": "2_Bartek", "message": f"elo420#{room}#"}
             sio.emit('message', message1)
     else:
-        print("No Room found in the string.")
+        
+        if "%" in message:
+            print("jest %")
+            substrings = message.split(", ")
+            print(substrings)
+            
+            room = substrings[4].replace("@", "")
+            print(room)
+            message2 = {"name": "2_Bartek", "message": f"jestem#{room}#"}
+            sio.emit('message', message2)
+        else:
+            print("No Room found in the string.")
 
 @sio.on('connect')
 def on_connect():
