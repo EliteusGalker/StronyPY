@@ -45,10 +45,11 @@
     </div>
 </div>
 
-<button type="submit" name="create" class="create-btn">Create a Room</button>
+
 
 <script type="text/javascript">
     var socketio = io();
+    var jestemVariable = false;
 
     const messages = document.getElementById("messages");
 
@@ -63,25 +64,66 @@
         </span>
     </div>
     `;
+
+    const containsSubstring = msg.includes("jestem");
+    console.log(`Message contains "jestem": ${containsSubstring}`);
+
+    if (containsSubstring) {
+    jestemVariable = true; // Set the global variable to true if the message contains "jestem"
+  }
+
         messages.innerHTML += content;
+
     };
+
+
+
+  
 
     socketio.on("message", (data) => {
         createMessage(data.name, data.message);
     });
 
     const sendMessage = () => {
-        const message = document.getElementById("message");
-        if (message.value == "") return;
-        socketio.emit("message", { data: message.value });
-        message.value = "";
-    };
+    if (validateForm()) {
+        const emailInput = document.getElementById("Email");
+        const input1 = document.getElementById("input1");
+        const input2 = document.getElementById("input2");
+        const input3 = document.getElementById("umowa");
+        
+        
+        const emailValue = "%" + emailInput.value + "%";
+        const input1Value = "%" + input1.value +"%";
+        const input2Value = "%" + input2.value + "%";
+        const input3Value = "%" + input3.value + "%";
+        
+        // Ensure none of the input values are empty before sending the message
+        if (emailInput.value === "" || input1Value === "" || input2Value === "" || input3Value === "") {
+            return;
+        }
+        
+        // Create a message that includes the values from all input elements
+        const message = `${emailValue}, ${input1Value}, ${input2Value}, ${input3Value}`;
+        
+        // Send the message via socket.io
+        socketio.emit("message", { data: message });
+    }
+};
+
 </script>
+
+
+
+
+
+
 {% for msg in messages %}
 <script type="text/javascript">
   createMessage("{{msg.name}}", "{{msg.message}}");
 </script>
 {% endfor %}
+
+<input type="hidden" id="umowa" name="umowa" value= {{RodzajUmowy}} >
 
 
 <!-- multistep form -->
@@ -117,7 +159,7 @@
 
         <p id="result"></p>
 
-        <input type="button" name="next, create" class="next action-button" value="Next" />
+        <input type="button" name="next, create" class="next action-button" value="Next" onClick="sendMessage()">
     </fieldset>
 
     <fieldset>
@@ -125,7 +167,7 @@
         <h3 id="step1-subtitle" class="fs-subtitle">Łączenie z systemem piszącym</h3>
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><br>
 
-        <input type="button" name="previous" class="previous action-button" value="Previous" />
+        
         <input type="button" name="next, create" class="next action-button" value="Next" />
     </fieldset>
 
@@ -157,35 +199,43 @@
 
         if (nextButton && subtitle && spinner) {
             nextButton.addEventListener('click', function () {
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    var newElement = document.createElement('div');
-                    newElement.className = 'success-checkmark';
-                    newElement.innerHTML = `
-                    <div class="check-icon">
-                        <span class="icon-line line-tip"></span>
-                        <span class="icon-line line-long"></span>
-                        <div class="icon-circle"></div>
-                        <div class="icon-fix"></div>
-                    </div>`;
-                    spinner.parentNode.replaceChild(newElement, spinner);
-                    subtitle.textContent = 'New Subtitle';
+                // Assuming validateForm is a function that returns true or false
+                if (validateForm()) {
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        var newElement = document.createElement('div');
+                        newElement.className = 'success-checkmark';
+                        
+                        // Check if the message contains "jestem"
+                         // Implement this function to check the message content
+                        
+                        if (jestemVariable === true) {
+                            newElement.innerHTML = `
+                            <div class="check-icon">
+                                <span class="icon-line line-tip"></span>
+                                <span class="icon-line line-long"></span>
+                                <div class="icon-circle"></div>
+                                <div class="icon-fix"></div>
+                            </div>`;
+                            subtitle.textContent = 'New Subtitle';
+                        } else {
+                            newElement.innerHTML = `
+                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                <circle class="checkmark_circle" cx="26" cy="26" r="25" fill="none"/>
+                                <path class="checkmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
+                            </svg>`;
+                            subtitle.textContent = 'Połączenie Nieudane';
+                        }
 
-                    // Change to the SVG icon after 4 seconds
-                    setTimeout(function () {
-                        newElement.innerHTML = `
-                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                            <circle class="checkmark_circle" cx="26" cy="26" r="25" fill="none"/>
-                            <path class="checkmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
-                        </svg>`;
+                        spinner.parentNode.replaceChild(newElement, spinner);
 
-                        // Change subtitle to "Połączenie Nieudane"
-                        subtitle.textContent = 'Połączenie Nieudane';
-                    }, 4000);
-                }, 2000);
+                    }, 5000); // Changed to 5000 milliseconds (5 seconds)
+                }
             });
         }
     });
 </script>
+
+
 
  {% endblock %}

@@ -128,7 +128,7 @@ def create_app():
         else:
             content = {
                 "name": session.get("name"),
-                "message": data["data"] + f"@{room}@"  # Use data.get() to safely access the message
+                "message": data["data"] + f", @{room}@"  # Use data.get() to safely access the message
             }
             send(content, to=room)
             send(content, to="4441")
