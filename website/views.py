@@ -99,29 +99,12 @@ def chatHome():
         else:
             email = ""
             name = "Niezal"
-
-            
+                   
         RodzajUmowy = request.form.get("RodzajUmowy")
-        
-        if current_user.is_authenticated and name == "2_Bartek":
-            if len(rooms) > 1 and "4441" in rooms:
-                for key in rooms.keys():
-                    if key != "4441":
-                        room = key
-                        break
-            else:
-                print("No Rooms")
-                flash('No Rooms.', category='error')
-                return redirect(url_for("views.wybierz"))
-                
-        else:
-            room = generate_unique_code(4)
-            rooms[room] = {"members": 0, "messages": []}
-            print("Room codes after adding a new room:", list(rooms.keys()))
-            
-        
-        
-        
+        room = generate_unique_code(4)
+        rooms[room] = {"members": 0, "messages": []}
+        print("Room codes after adding a new room:", list(rooms.keys()))
+               
         rooms[room] = {"members": 0, "messages": []}
         
 

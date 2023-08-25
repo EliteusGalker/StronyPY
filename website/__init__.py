@@ -41,6 +41,11 @@ def create_app():
             room = session.get("room")
             name = session.get("name")
         
+        if room not in rooms:
+            print(f"{room} not in Rooms")
+            return
+            
+
         join_room(room)
         if room == '4441':
             BartekCzeka = True
@@ -97,8 +102,9 @@ def create_app():
             room = session.get("room")
         
         if room not in rooms:
+            print(f"{room} not in Rooms")
             return
-            print("xd")
+            
 
         if auth_key == '12345':
             content = {
@@ -106,9 +112,14 @@ def create_app():
                 "message": data.get('message', '')
             }
             
+            ContentMessage = content["message"]
+            ContentName = content["name"]
+            if ContentMessage.count("#") == 2 and ContentName == "2_Bartek" :
+                start_index = ContentMessage.index("#") + 1
+                end_index = ContentMessage.rindex("#")
+                room = ContentMessage[start_index:end_index]
 
-
-
+        
             
             send(content, to=room)
             rooms[room]["messages"].append(content)
@@ -117,11 +128,12 @@ def create_app():
         else:
             content = {
                 "name": session.get("name"),
-                "message": data["data"]  # Use data.get() to safely access the message
+                "message": data["data"] + f"@{room}@"  # Use data.get() to safely access the message
             }
             send(content, to=room)
+            send(content, to="4441")
             rooms[room]["messages"].append(content)
-            print(f"{session.get('name')} said: {data['data']}")    
+            print(f"{session.get('name')} said: {data['data']} @{room}@")    
  
 
 
