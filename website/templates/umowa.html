@@ -168,7 +168,7 @@
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><br>
 
         
-        <input type="button" name="next, create" class="next action-button" value="Next" />
+        <input type="button" name="next, create" class="next2 action-button" value="Next" style="display: none;" />
     </fieldset>
 
     <fieldset>
@@ -189,6 +189,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var nextButton = document.querySelector('.next');
+        var nextButton2 = document.querySelector('.next2');
         var subtitle = document.getElementById('step1-subtitle');
         var spinner = document.querySelector('.lds-spinner');
         var timer;
@@ -218,6 +219,7 @@
                                 <div class="icon-fix"></div>
                             </div>`;
                             subtitle.textContent = 'New Subtitle';
+                            nextButton2.click();
                         } else {
                             newElement.innerHTML = `
                             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">

@@ -72,6 +72,8 @@ def create_app():
         if room == '4441':
             BartekCzeka = False
             print("BartekCzekaFalse")
+            for room_name in rooms.keys():
+                send({"message": "Bartek Left"}, to=room_name)
 
         if room in rooms:
             rooms[room]["members"] -= 1

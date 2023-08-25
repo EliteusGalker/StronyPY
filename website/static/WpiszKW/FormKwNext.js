@@ -4,7 +4,7 @@ var left, opacity, scale; // fieldset properties which we will animate
 var animating; // flag to prevent quick multi-click glitches
 
 $(document).ready(function () {
-    $(".next").click(function () {
+    $(".next, .next2").click(function () {
         if (validateForm()) {
             if (animating) return false;
             animating = true;
