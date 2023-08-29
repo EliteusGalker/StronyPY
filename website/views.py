@@ -63,6 +63,13 @@ def wybierz():
 
 
 
+@views.route('/wybierz1', methods=['GET'])
+def wybierz1():
+   
+    return render_template("chose copy.html", user=current_user)
+
+
+
 
 @views.route('/przedwstepna', methods=['GET'])
 def przedwstepna():
