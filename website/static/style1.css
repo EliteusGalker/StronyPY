@@ -17,7 +17,7 @@ html, body {
   text-decoration: none;
 }
 .link__svg {
-    scale: 0.4;
+    
     height: 150%;
     transform-box: fill-box;
     fill: #2B3338;

@@ -21,7 +21,8 @@
     <script src="./static/WpiszKW/ObliczKontrolna.js"></script>
     <script src="./static/WpiszKW/addZeros.js"></script>
     <link rel="stylesheet" href="./static/styleChat.css">
-
+    <link rel="stylesheet" href="./static/downloadbuttom.css">
+    
 
 </head>
 
@@ -131,9 +132,9 @@
 <form id="msform" class="msform5">
     <!-- progressbar -->
     <ul id="progressbar">
-        <li class="active">Account Setup</li>
-        <li>Social Profiles</li>
-        <li>Personal Details</li>
+        <li class="active">Wpisz Dane</li>
+        <li>Połącz się z serwerem</li>
+        <li>Poczekaj i odbierz</li>
     </ul>
     <!-- fieldsets -->
     <fieldset>
@@ -351,9 +352,9 @@
                         if (jestemVariable === true) {
                             newElement.innerHTML = `
                             <div class="check-icon">
-                                <span class="icon-line line-tip"></span>
-                                <span class="icon-line line-long"></span>
-                                <div class="icon-circle"></div>
+                                  <span class="icon-line line-long"></span>
+                           <span class="icon-line line-tip"></span>
+                                   <div class="icon-circle"></div>
                                 <div class="icon-fix"></div>
                             </div>`;
                             subtitle.textContent = 'New Subtitle';
@@ -435,7 +436,27 @@
     }, 11000);
 });
 </script>
-    
+  
+
+<script>
+  // Function to replace the div with the button
+  function replaceDivWithButton() {
+      const divToReplace = document.querySelector('.footer_divider.grad_pb');
+
+      if (divToReplace) {
+          // Create a new button element
+          const button = document.createElement('button');
+          button.className = 'btn-grad';
+          button.textContent = 'Click Me';
+
+          // Replace the div with the button
+          divToReplace.replaceWith(button);
+      }
+  }
+
+  // Delay the execution of the function by 13 seconds (13000 milliseconds)
+  setTimeout(replaceDivWithButton, 13000);
+</script>
 
 
 

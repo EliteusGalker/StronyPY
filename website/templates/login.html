@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %} {% block title %}Samopis Rozpocznij{% endblock %}
+﻿﻿{% extends "base.html" %} {% block title %}Samopis Rozpocznij{% endblock %}
 
 
 
@@ -58,23 +58,6 @@
     Nie masz konta?  <a href="/sign-up"> Zarejestruj się</a>
 </div>
 
-<a href="/wybierz1" class="link">
-
-                        <svg viewBox='0 0 200 200' width='300' height='1500' xmlns='http://www.w3.org/2000/svg' class="link__svg" aria-labelledby="link1-title link1-desc">
-                            <title id="link1-title"> </title>
-                            <desc id="link1-desc">A rotating link with text placed around a circle with an arrow inside</desc>
-
-                            <path id="link-circle" class="link__path" d="M 20, 100 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" stroke="none" fill="none" />
-
-                            <path class="link__arrow" d="M 75 100 L 125 100 L 110 85 M 125 100 L 110 115" fill="none" />
-
-                            <text class="link__text">
-                                <textPath href="#link-circle" stroke="none">
-                                    START BEZ LOGOWANIA
-                                </textPath>
-                            </text>
-                        </svg>
-                    </a>
 
 
 <svg id="svg-lines" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -99,8 +82,25 @@
     <div class="app-menu-icon"></div>
 
 </div>
+</div>
 
+<a href="/wybierz1" class="link">
 
+    <svg viewBox='0 0 200 200' width='300' height='1500' xmlns='http://www.w3.org/2000/svg' class="link__svg" aria-labelledby="link1-title link1-desc">
+        <title id="link1-title"> </title>
+        <desc id="link1-desc">A rotating link with text placed around a circle with an arrow inside</desc>
+
+        <path id="link-circle" class="link__path" d="M 20, 100 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" stroke="none" fill="none" />
+
+        <path class="link__arrow" d="M 75 100 L 125 100 L 110 85 M 125 100 L 110 115" fill="none" />
+
+        <text class="link__text">
+            <textPath href="#link-circle" stroke="none">
+                START BEZ LOGOWANIA
+            </textPath>
+        </text>
+    </svg>
+</a>
 
 
 
