@@ -2,6 +2,7 @@ import socketio
 import time
 import re
 from doit import join_inputs
+from upload import upload_file
 
 import threading
 
@@ -128,10 +129,15 @@ def process(sio):
             now = list_of_dicts[0]
             print(now)
         time.sleep(10)
-        sio.emit('message', {"name": "2_Bartek", "message": f"HHTP XD XD XD #{now['room']}#"}) # koniec roboty 
+        sio.emit('message', {"name": "2_Bartek", "message": f"HHTP XD XD XD #{now['room']}#"}) # koniec roboty
+        room = now['room']
+        upload_file(room)
         print("HHTP XD XD XD")
         with list_lock:
-            list_of_dicts.pop(0)
+            for item in list_of_dicts:
+                if item.get('room') == room:
+                    list_of_dicts.remove(item)
+                    
             if not list_of_dicts:
                 print("Brak Zadań, clearing the event.")
                 data_added.clear()  # Clear the event if the list is empty          
