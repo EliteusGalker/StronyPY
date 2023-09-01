@@ -562,6 +562,7 @@
   z-index: 0;
   overflow: visible;
   transform-origin: center 4vh;
+  pointer-events: none;
 }
 
 .svg-data {
