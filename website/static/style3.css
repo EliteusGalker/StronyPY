@@ -97,9 +97,16 @@
 	position: absolute;
 	top: 0;
 	left: 6.5vh;
-	z-index: 2;
+	
 	border: none;
 	box-shadow: inset 0 -0.5vh rgba(0, 0, 0, 0.1);
+}
+
+.NewInput:-internal-autofill-selected {
+  background-color: initial !important;
+  background-image: initial !important;
+  background-clip: initial !important;
+  color: initial !important;
 }
 
 	
@@ -107,7 +114,7 @@
 	
 	.NewInput:focus {
 		outline: none;
-		box-shadow: inset 0 -0.5vh transparent;
+		
 	}
 
 	.NewInput[type=email] {

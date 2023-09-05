@@ -1,4 +1,4 @@
-import mailbox
+
 from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for, send_from_directory
 from flask_login import login_required, current_user
 from .models import Note, rooms
@@ -76,7 +76,12 @@ def wybierz1():
    
     return render_template("chose copy.html", user=current_user)
 
+@views.route('/wzory', methods=['GET'])
+def wzory():
+    
+            
 
+    return render_template("wzory.html", user=current_user)
 
 
 @views.route('/przedwstepna', methods=['GET'])
@@ -134,7 +139,7 @@ def chatHome():
 
 
 
-@views.route("/room", methods=["POST", "GET"])
+@views.route("/room", methods=["POST", "GET"])        # UWAGA dodać autoryzacyje, zeby nie mógł wejść wpisując room w przeglądarce i mając w sesji room, nowy key do dic rooms, auth w sesji, który bedzie podawany tutaj i podczas downloadu i będzie musiał matchować room.
 def room():
     
     email = session.get("email")
@@ -238,7 +243,7 @@ def download_files():
         print(zip_filepath)
         return send_from_directory(UPLOAD_FOLDER, zip_filename, as_attachment=True)
     else:
-        return send_from_directory("./static/", "firmowy.dotx", as_attachment=True)
+        return send_from_directory("./static/", "firmowy.docx", as_attachment=True)
         
 
 

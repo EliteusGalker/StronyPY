@@ -70,19 +70,43 @@
     const containsSubstring = msg.includes("jestem");
     const containsLeft = msg.includes("Left");
     const containsKolejka = msg.includes("KOLEJKA");
+    const containsElo = msg.includes("elo");
 
     var alertElement = document.querySelector('.alert-warning[style="display: none;"]');
+    var infoElement = document.querySelector('.alert-info[style="display: none;"]');
 
   
+
+
+    if (containsElo) {
+      const originalStyle = infoElement.getAttribute('style');
+
+// Remove the style attribute
+infoElement.removeAttribute('style');
+
+// After 5 seconds, set the original style attribute back
+setTimeout(function() {
+  infoElement.setAttribute('style', originalStyle);
+}, 5000); // 5000 milliseconds (5 seconds)
+}
 
     if (containsSubstring) {
     jestemVariable = true; // Set the global variable to true if the message contains "jestem"
   }
 
   if (containsLeft) {
-    // Remove the 'style' attribute to display the element
-    alertElement.removeAttribute('style');
-    
+
+    const originalStyle = alertElement.getAttribute('style');
+
+// Remove the style attribute
+alertElement.removeAttribute('style');
+
+// After 5 seconds, set the original style attribute back
+setTimeout(function() {
+  alertElement.setAttribute('style', originalStyle);
+}, 5000); // 5000 milliseconds (5 seconds)
+
+    // Remove the 'style' attribute to display the element  
   }
 
 
@@ -348,13 +372,6 @@
     </fieldset>
 </form>
 
-<form method="POST" action="/download_files">
-  <!-- Input for the folder_name field -->
-  <input type="hidden" name="folder_name" value={{room}}>
-  
-  <!-- Custom button -->
-  <input type="submit" class="btn-grad" value="Click Me">
-</form>
 
 
 
@@ -411,7 +428,7 @@
 </script>
 
 <script>
-    var nextButton2 = document.querySelector('.next33');
+    var nextButton2 = document.querySelector('.next22222');
 
     nextButton2.addEventListener('click', function () {
         // Function to remove the "display: none;" style for a chat div by its ID
