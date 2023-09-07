@@ -8,6 +8,7 @@ import random
 from string import ascii_uppercase
 from flask_socketio import SocketIO, send, join_room, leave_room
 import os
+import time
 
 views = Blueprint('views', __name__)
 
@@ -231,10 +232,11 @@ def download_files():
 
         # Create the ZIP file
         import zipfile
+        
         with zipfile.ZipFile(zip_filepath, 'w', zipfile.ZIP_DEFLATED) as zipf:
             for filename in files:
                 file_path = os.path.join(folder_path, filename)
-                zipf.write(zip_filepath, os.path.basename(file_path))
+                zipf.write(file_path, os.path.basename(file_path))
 
         
         print("Wysyłam PLIK XDDDDD")    # Use Flask's send_from_directory function to send the ZIP file to the client

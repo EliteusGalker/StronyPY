@@ -16,8 +16,16 @@
     <!-- Include jQuery Easing Plugin AFTER jQuery Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
+    {% if RodzajUmowy == "sprzedaz" %}
     <script src="./static/WpiszKW/validateForm.js"></script>
     <script src="./static/WpiszKW/FormKwNext.js"></script>
+    {% endif %}
+
+
+    <script src="./static/WpiszKW/FormKwNextForum.js"></script>
+
+
+    
     <script src="./static/WpiszKW/ObliczKontrolna.js"></script>
     <script src="./static/WpiszKW/addZeros.js"></script>
     <link rel="stylesheet" href="./static/styleChat.css">
@@ -48,6 +56,7 @@
 </div>
 
 
+{% if RodzajUmowy == "sprzedaz" %}
 
 <script type="text/javascript">
     var socketio = io();
@@ -137,32 +146,154 @@ setTimeout(function() {
 
     const sendMessage = () => {
     if (validateForm()) {
-        const emailInput = document.getElementById("Email");
-        const input1 = document.getElementById("input1");
-        const input2 = document.getElementById("input2");
-        const input3 = document.getElementById("umowa");
-        
-        
-        const emailValue = "%" + emailInput.value + "%";
-        const input1Value = "%" + input1.value +"%";
-        const input2Value = "%" + input2.value + "%";
-        const input3Value = "%" + input3.value + "%";
-        
-        // Ensure none of the input values are empty before sending the message
-        if (emailInput.value === "" || input1Value === "" || input2Value === "" || input3Value === "") {
+        const form = document.getElementById("msform"); // Replace with your form's ID
+        const formData = new FormData(form);
+        const umowa = document.getElementById("umowa");
+        const UmowaValue = "++" + umowa.value + "@"; // Use 'umowa' instead of 'input3'
+
+        // Check if any input values are empty before sending the message
+        if (Array.from(formData.values()).some(value => value.trim() === "")) {
             return;
         }
-        
-        // Create a message that includes the values from all input elements
-        const message = `${emailValue}, ${input1Value}, ${input2Value}, ${input3Value}`;
-        
+
+        // Create a message that includes the values from all input elements and 'UmowaValue'
+        const messageValues = Array.from(formData.entries()).map(([key, value]) => {
+            return "%" + value + "%"; // Customize the format as needed
+        });
+
+        // Add 'UmowaValue' to the array of message values
+        messageValues.push(UmowaValue);
+
+        // Join all values into a single message string
+        const message = messageValues.join(", ");
+
         // Send the message via socket.io
         socketio.emit("message", { data: message });
     }
 };
 
+
+
 </script>
 
+{% else %}
+
+<script type="text/javascript">
+  var socketio = io();
+  var jestemVariable = false;
+
+  const messages = document.getElementById("messages");
+
+  const createMessage = (name, msg) => {
+      const content = `
+  <div class="text">
+      <span>
+          <strong>${name}</strong>: ${msg}
+      </span>
+      <span class="muted">
+          ${new Date().toLocaleString()}
+      </span>
+  </div>
+  `;
+
+  const containsSubstring = msg.includes("jestem");
+  const containsLeft = msg.includes("Left");
+  const containsKolejka = msg.includes("KOLEJKA");
+  const containsElo = msg.includes("elo");
+
+  var alertElement = document.querySelector('.alert-warning[style="display: none;"]');
+  var infoElement = document.querySelector('.alert-info[style="display: none;"]');
+
+
+
+
+  if (containsElo) {
+    const originalStyle = infoElement.getAttribute('style');
+
+// Remove the style attribute
+infoElement.removeAttribute('style');
+
+// After 5 seconds, set the original style attribute back
+setTimeout(function() {
+infoElement.setAttribute('style', originalStyle);
+}, 5000); // 5000 milliseconds (5 seconds)
+}
+
+  if (containsSubstring) {
+  jestemVariable = true; // Set the global variable to true if the message contains "jestem"
+}
+
+if (containsLeft) {
+
+  const originalStyle = alertElement.getAttribute('style');
+
+// Remove the style attribute
+alertElement.removeAttribute('style');
+
+// After 5 seconds, set the original style attribute back
+setTimeout(function() {
+alertElement.setAttribute('style', originalStyle);
+}, 5000); // 5000 milliseconds (5 seconds)
+
+  // Remove the 'style' attribute to display the element  
+}
+
+
+if (containsKolejka) {
+const match = msg.match(/KOLEJKA.*?\((\d+)\)/); // Extract the number in parentheses
+const numberInParentheses = match[1]; // Get the captured number
+console.log("Found number in parentheses:", numberInParentheses);
+
+if (numberInParentheses > 0) {
+  var chatDiv = document.getElementById("chat1");
+      chatDiv.style.removeProperty("display");
+      var contactNameElement = chatDiv.querySelector(".contact_nameKolejka");
+      
+  contactNameElement.textContent = "Twoja pozycja w kolejce to:"  + numberInParentheses ;
+}
+}
+      messages.innerHTML += content;
+
+  };
+
+
+
+
+
+  socketio.on("message", (data) => {
+      createMessage(data.name, data.message);
+  });
+
+  const sendMessage = () => {
+  
+      const form = document.getElementById("msform"); // Replace with your form's ID
+      const formData = new FormData(form);
+      const umowa = document.getElementById("umowa");
+      const UmowaValue = "++" + umowa.value + "@"; // Use 'umowa' instead of 'input3'
+
+
+
+      // Create a message that includes the values from all input elements and 'UmowaValue'
+      const messageValues = Array.from(formData.entries()).map(([key, value]) => {
+          return "%" + value + "%"; // Customize the format as needed
+      });
+
+      // Add 'UmowaValue' to the array of message values
+      messageValues.push(UmowaValue);
+
+      // Join all values into a single message string
+      const message = messageValues.join(", ");
+
+      // Send the message via socket.io
+      socketio.emit("message", { data: message });
+  
+};
+
+
+
+</script>
+
+{% endif %}
 
 
 
@@ -203,15 +334,58 @@ setTimeout(function() {
         
 
 
-
+        {% if RodzajUmowy == "sprzedaz" %}
 
         <input type="text" name="input1" id="input1" placeholder="Znak Wydziału Sądu" oninput="this.value = this.value.toUpperCase(); calculateKontrolna();" />
         <input type="text" name="input2" id="input2" placeholder="Numer Księgi Wieczystej" oninput="calculateKontrolna();" onblur="addLeadingZeros();" />
 
+
+        {% else %}
+        
+        <input type="text" name="input1" id="input1" placeholder="Nazwa Funduszu" >
+        <input type="text" name="input2" id="input2" placeholder="Miejsce Zgromadzenia" >
+        <input type="time" name="input3" id="input3" placeholder="Godzina Zgromadzenia" >
+        <input type="text" name="input4" id="input4" placeholder="Podstawa Zwołania" >
+        
+        <input type="text" name="input5" id="input5" placeholder="Rodzaj Certyfikatów" >
+        <input type="text" name="input6" id="input6" placeholder="Termin na Zgłoszenie - podstawa" >
+        <input type="text" name="input7" id="input7" placeholder="Numery Uchwały Zarządu" >
+      
+
+      <input type="button" name="next3" class="next action-button" value="Dalej">
+
+    </fieldset>
+
+    <fieldset>
+        
+        <input type="text" name="input9" id="input9" placeholder="E-mail dla Funduszu" >
+        <input type="text" name="input10" id="input9" placeholder="Komentarz do RB" >
+        <input type="text" name="input11" id="input11" placeholder="Zawiadamjający" >
+        <input type="text" name="input11" id="input11" placeholder="Stanowisko Zawiadajmajacego" >
+        <input type="button" name="next3" class="next action-button" value="Dalej">
+
+      </fieldset>
+
+      <fieldset>
+        <input type="text" name="input12" id="input12" placeholder="Uchwała 1" >
+        <input type="text" name="input13" id="input13" placeholder="Uchwała 2" >
+        <input type="text" name="input14" id="input14" placeholder="Uchwała 3" >
+        <input type="text" name="input15" id="input15" placeholder="Uchwała 4" >
+        <input type="text" name="input16" id="input16" placeholder="Uchwała 5" >
+        <input type="text" name="input17" id="input17" placeholder="Uchwała 6" >
+        <input type="text" name="input18" id="input18" placeholder="Uchwała 7" >
+        <input type="text" name="input19" id="input19" placeholder="Uchwała 8" >
+
+      
+
+
+        {% endif %}
+
+
         <p id="result"></p>
 
-        <input type="button" name="next, create" class="next action-button" value="Next" onClick="sendMessage()">
-    </fieldset>
+        <input type="button" name="nextButton33, next, create" class="next action-button" value="Next" onClick="sendMessage()">
+      </fieldset>
 
     <fieldset>
         <h2 class="fs-title">Social Profiles</h2>
@@ -374,6 +548,7 @@ setTimeout(function() {
 
 
 
+{% if RodzajUmowy == "sprzedaz" %}
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -390,7 +565,9 @@ setTimeout(function() {
         if (nextButton && subtitle && spinner) {
             nextButton.addEventListener('click', function () {
                 // Assuming validateForm is a function that returns true or false
+                
                 if (validateForm()) {
+
                     clearTimeout(timer);
                     timer = setTimeout(function () {
                         var newElement = document.createElement('div');
@@ -426,6 +603,72 @@ setTimeout(function() {
         }
     });
 </script>
+
+{% else %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var nextButton2 = document.querySelector('.next2');
+    var nextButton = document.getElementsByName('nextButton33, next, create')[0]; // Select the first element with the name "nextButton"
+    var subtitle = document.getElementById('step1-subtitle');
+    var spinner = document.querySelector('.lds-spinner');
+    var timer;
+
+      // Store original content
+      var originalSubtitle = subtitle.textContent;
+      var originalSpinner = spinner.cloneNode(true); // Clone the spinner element
+
+      if (nextButton && subtitle && spinner) {
+          nextButton.addEventListener('click', function () {
+              // Assuming validateForm is a function that returns true or false
+              
+              
+
+                  clearTimeout(timer);
+                  timer = setTimeout(function () {
+                      var newElement = document.createElement('div');
+                      newElement.className = 'success-checkmark';
+                      
+                      // Check if the message contains "jestem"
+                       // Implement this function to check the message content
+                      
+                      if (jestemVariable === true) {
+                          newElement.innerHTML = `
+                          <div class="check-icon">
+                                <span class="icon-line line-long"></span>
+                         <span class="icon-line line-tip"></span>
+                                 <div class="icon-circle"></div>
+                              <div class="icon-fix"></div>
+                          </div>`;
+                          subtitle.textContent = 'New Subtitle';
+                          nextButton2.click();
+                      } else {
+                          newElement.innerHTML = `
+                          <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                              <circle class="checkmark_circle" cx="26" cy="26" r="25" fill="none"/>
+                              <path class="checkmark_check" fill="none" d="M14.1 14.1l23.8 23.8 m0,-23.8 l-23.8,23.8"/>
+                          </svg>`;
+                          subtitle.textContent = 'Połączenie Nieudane';
+                      }
+
+                      spinner.parentNode.replaceChild(newElement, spinner);
+
+                  }, 3000); // Changed to 5000 milliseconds (5 seconds)
+              
+          });
+      }
+  });
+</script>
+
+
+{% endif %}
+
+
+
+
+
+
+
 
 <script>
     var nextButton2 = document.querySelector('.next22222');
