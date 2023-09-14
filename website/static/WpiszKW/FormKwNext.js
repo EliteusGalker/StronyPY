@@ -5,7 +5,7 @@ var animating; // flag to prevent quick multi-click glitches
 
 $(document).ready(function () {
     $(".next, .next2").click(function () {
-        if (validateForm()) {
+        if (validateFormNOMSG()) {
             if (animating) return false;
             animating = true;
 

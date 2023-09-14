@@ -1,4 +1,4 @@
-﻿﻿{% extends "base.html" %} {% block title %}Samopis Rozpocznij{% endblock %}
+{% extends "base.html" %} {% block title %}Samopis Rozpocznij{% endblock %}
 
 
 
@@ -13,43 +13,42 @@
     <div id="app">
         <div class="app-view">
             <header class="app-header">
-                <h1>Automatyczny Generator Dokumentów</h1>
+                <h1  style="text-align: center;">Generator Dokumentów</h1>
 
-
+<h2 style="margin-top: 5%; margin-left: 1.5%; text-align: center">
                 <span class="app-subheading">
                     zaloguj się
 
-                    albo<br/>
-                    rozpocznij bez logowania.
+                    albo
+
+                    obejrzył <br/>
+                    film instruktażowy
 
 
                     <!-- partial:index.partial.html -->
-                    
-                </span>
-                <div class = "nologin_container">
-                    <a href="/wybierz1" class="link">
 
-                        <svg viewBox='0 0 200 200' width='300' height='1500' xmlns='http://www.w3.org/2000/svg' class="link__svg" aria-labelledby="link1-title link1-desc">
-                            <title id="link1-title"> </title>
-                            <desc id="link1-desc">A rotating link with text placed around a circle with an arrow inside</desc>
-                    
-                            <path id="link-circle" class="link__path" d="M 20, 100 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" stroke="none" fill="none" />
-                    
-                            <path class="link__arrow" d="M 75 100 L 125 100 L 110 85 M 125 100 L 110 115" fill="none" />
-                    
-                            <text class="link__text">
-                                <textPath href="#link-circle" stroke="none">
-                                    START BEZ LOGOWANIA
-                                </textPath>
-                            </text>
-                        </svg>
-                    </a>
+                </span>
+                </h2>
+
+
+
+<div class="video-container" style="display:flex">
+                        <video controls width="60%" height="60%" style="margin-top:10%; margin-left: 20.5%;">
+                            <source src="./static/Line Handling Accident Prevention.mp4" type="video/mp4">
+                            <!-- You can add multiple <source> elements for different video formats -->
+                            Your browser does not support the video tag.
+                        </video>
+
+
+                    </div>
                 </div>
 
 
 
+
+
                     <!-- partial -->
-                
+
 
 
             </header>
@@ -65,12 +64,12 @@
             <input type="password" class="NewInput" required placeholder="Hasło" id="password" name="password" autocomplete="current-password" />
 
 
-            <a href="#welcome" class="btn app-button" onclick="document.querySelector('form').submit()">Zaloguj</a>
+            <a href="#welcome" class="btn app-button" onclick="document.querySelector('form').submit()" style="margin-left: -12%;">Zaloguj</a>
 
 </form>
 
 
-<div class="app-register">
+<div class="app-register" style="margin-left: -12%;">
     Nie masz konta?  <a href="/sign-up"> Zarejestruj się</a>
 
 </div>

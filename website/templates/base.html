@@ -6,7 +6,7 @@
 
   <title>{% block title %}Samopis{% endblock %}</title>
 
-  
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -15,8 +15,8 @@
 
 
 
- 
-    
+
+
     <link rel="stylesheet" href="./static/bootstrap.css">
     <link rel="stylesheet" href="./static/styleNotification.css">
     <link rel="stylesheet" href="./static/style.css">
@@ -27,12 +27,12 @@
     <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&amp;family=Quicksand:wght@300&amp;display=swap'
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap">
 
-    
-    
-	
 
 
-    
+
+
+
+
 
 
 </head>
@@ -44,26 +44,26 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        
+        font-family: 'Barlow', sans-serif;
     }
 </style>
 
 <body>
 
     <ul class="nav-links" id="navbar">
-      
-      
+
+
       <a href="/login" style="max-width: 272px; margin-right: auto;">
         <img src="./static/logo.png" width="90%" height="20%" style="margin-left: 25px;">
-    </a>  
-    
+    </a>
+
 
     <div class="alert-container">
             <a>
 
-                
-                  
-              
+
+
+
                     <div class="col-sm-12">
                       <div class="alert fade alert-simple alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" style="display: none;">
 
@@ -71,16 +71,16 @@
                         <strong class="font__weight-semibold">Dobra robota!</strong> Wszystko poszło zgodnie z planem.
                       </div>
                     </div>
-              
+
                     <div class="col-sm-12">
                       <div class="alert fade alert-simple alert-info alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" role="alert" data-brk-library="component__alert" style="display: none;">
 
                         <i class="start-icon  fa fa-info-circle faa-shake animated"></i>
                         <strong class="font__weight-semibold">Uwaga!</strong> Systemy piszące w gotowości.
                       </div>
-              
+
                     </div>
-              
+
                     <div class="col-sm-12">
                       <div class="alert fade alert-simple alert-warning alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" role="alert" data-brk-library="component__alert" style="display: none;">
 
@@ -88,27 +88,27 @@
                         <strong class="font__weight-semibold">Uwaga!</strong> Rozłączono z systemem piszącym.
                       </div>
                     </div>
-              
+
                     <div class="col-sm-12">
                       <div class="alert fade alert-simple alert-danger alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" role="alert" data-brk-library="component__alert"  style="display: none;">
 
                         <i class="start-icon far fa-times-circle faa-pulse animated"></i>
-                        <strong class="font__weight-semibold">Motyla noga!</strong> Coś poszło nie tak, spóbuj ponownie za jakiś czas.
+                        <strong class="font__weight-semibold">Uwaga!</strong> Wpisano niepoprawne dane.
                       </div>
                     </div>
-              
+
                     <div class="col-sm-12">
                       <div class="alert fade alert-simple alert-primary alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" role="alert" data-brk-library="component__alert" style="display: none;">
 
                         <i class="start-icon fa fa-thumbs-up faa-bounce animated"></i>
                         <strong class="font__weight-semibold">Pisanie zakończone</strong> Nacisnij przycisk na dole aby pobrać dokument.
                       </div>
-              
+
                     </div>
-              
+
                   </div>
                 </div>
-              
+
               </div>
             </a>
             {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -132,14 +132,14 @@
             <div class="auth-links">
               <a href="/download_files" style="max-width: 25px; ">
                 <img src="./static/firmowy.png" width="100%" height="100%" style="margin-left: -30px;">
-            </a>  
+            </a>
                 {% if user.is_authenticated %}
                 <a href="/wzory" style="max-width: 25px; ">
                   <img src="./static/wzory.png" width="100%" height="100%" style="margin-right: 30px;">
                 </a>
-                <li class="upward" style="font-size: 20px;"> zalogowano jako: {{ current_user.first_name}}</li>
+                <li class="upward" style="font-size: 20px; margin-left: 30px"> zalogowano jako: {{ current_user.first_name}}</li>
         <li class="center"> <a href="/logout" id="logout">Wyloguj</a></li>
-        
+
         {% else %}
 
         <li class="forward">  <a href="/login">Zaloguj</a></li>
@@ -148,7 +148,7 @@
         <li class="forward">  <a href="/sign-up">Zarejestruj</a></li>
 
         {% endif %}
-    
+
 
         </div>
         </div>
@@ -167,7 +167,7 @@
 
             <li class="upward" style="position:relative"><a href="/logout">Regulamin</a></li>
 
-            <li class="upward" style="position:relative">  <a href="/sign-up">Polityka Prywatności</a></li>
+            <li class="upward" style="position:relative">  <a href="/sign-up">Prywatność</a></li>
 
             <li class="upward" style="position:relative">  <a href="/login">Kontakt</a></li>
 
@@ -185,7 +185,7 @@
 
 
     {% block content %} {% endblock %}
-  
+
 
     {% block javascript %}
 

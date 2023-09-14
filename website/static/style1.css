@@ -17,9 +17,9 @@ html, body {
   text-decoration: none;
 }
 .link__svg {
-    
-    height: 100%;
-    max-width: 100px;
+
+    height: 58%;
+    max-width: 115px;
     transform-box: fill-box;
     fill: #2B3338;
     stroke: #2B3338;

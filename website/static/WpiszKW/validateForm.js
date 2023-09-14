@@ -56,32 +56,41 @@
        "ZG1R", "BY1Z", "GL1X", "PL2M", "PL1Z", "BB1Z"];
       
 
-var emailRegex = /^\S+@\S+\.\S+$/;
+       var emailRegex = /^\S+@\S+\.\S+$/;
 
-      if (!validOptions.includes(input1)) {
-  if (!input1) {
-    alert("Wpisz Znak Wydziału Sądu.");
-  } else {
-        alert("Zły Znak Wydziału Sądu.");
-    }
-        return false;
-      }
-      
-if (!input2 || !/^\d{8}$/.test(input2)) {
-  if (!input2) {
-    alert("Wpisz Numer Księgi Wieczystej.");
-  } else {
-    alert("Zły Numer Księgi Wieczystej.");
-  }
-  return false;
-}
-
-    if (!emailRegex.test(input3)) {
-      alert("Nieprawidłowy adres e-mail.");
-      return false;
-    }
+       var errorMessage = ""; // Initialize an empty error message string
      
-  	
-	return true;
-}
+       if (!validOptions.includes(input1)) {
+         errorMessage += "Wpisz Znak Wydziału Sądu.\n";
+       }
+     
+       if (!input2 || !/^\d{8}$/.test(input2)) {
+         errorMessage += "Wpisz Numer Księgi Wieczystej.\n";
+       }
+     
+       if (!emailRegex.test(input3)) {
+         errorMessage += "Nieprawidłowy adres e-mail.\n";
+       }
+     
+       if (errorMessage) {
+         // If there's an error message, display it in a single alert
+         alert(errorMessage);
+         var alertElement = document.querySelector('.alert-danger[style="display: none;"]');
+         const originalStyle = alertElement.getAttribute('style');
+
+// Remove the style attribute
+alertElement.removeAttribute('style');
+
+// After 5 seconds, set the original style attribute back
+setTimeout(function() {
+  alertElement.setAttribute('style', originalStyle);
+}, 5000); // 5000 milliseconds (5 seconds)
+
+         return false;
+       }
+     
+       return true; // Return true if all validations pass
+     }
+     
     
+     

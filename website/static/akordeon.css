@@ -45,7 +45,8 @@ h1 a {
 .accordion .link {
   cursor: pointer;
   display: block;
-  padding: 15px 15px 15px 42px;
+  padding: 15px 0px 15px 0px;
+  text-align: center;
   color: #4D4D4D;
   font-size: 14px;
   font-weight: 700;
@@ -55,6 +56,7 @@ h1 a {
   -o-transition: all 0.4s ease;
   transition: all 0.4s ease;
   width: 100%;
+  font-family: 'Barlow', sans-serif;
 }
 
 .accordion li:last-child .link { border-bottom: 0; }

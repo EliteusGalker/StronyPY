@@ -18,11 +18,16 @@
 
     {% if RodzajUmowy == "sprzedaz" %}
     <script src="./static/WpiszKW/validateForm.js"></script>
+    <script src="./static/WpiszKW/validateFormNOMSG.js"></script>
+    
+    
     <script src="./static/WpiszKW/FormKwNext.js"></script>
+    {% else %}
+    <script src="./static/WpiszKW/FormKwNextForum.js"></script>
     {% endif %}
 
 
-    <script src="./static/WpiszKW/FormKwNextForum.js"></script>
+   
 
 
     
@@ -80,7 +85,9 @@
     const containsLeft = msg.includes("Left");
     const containsKolejka = msg.includes("KOLEJKA");
     const containsElo = msg.includes("elo");
+    const containsHHTP = msg.includes("HHTP");
 
+    const divToReplace = document.querySelector('.footer_divider.grad_pb');
     var alertElement = document.querySelector('.alert-warning[style="display: none;"]');
     var infoElement = document.querySelector('.alert-info[style="display: none;"]');
 
@@ -102,6 +109,16 @@ setTimeout(function() {
     if (containsSubstring) {
     jestemVariable = true; // Set the global variable to true if the message contains "jestem"
   }
+
+
+
+  if (containsHHTP) {             //NIE DZIAŁĄ !
+
+     
+          replaceDivWithButton();
+  
+} 
+  
 
   if (containsLeft) {
 
@@ -145,7 +162,7 @@ setTimeout(function() {
     });
 
     const sendMessage = () => {
-    if (validateForm()) {
+    
         const form = document.getElementById("msform"); // Replace with your form's ID
         const formData = new FormData(form);
         const umowa = document.getElementById("umowa");
@@ -169,7 +186,7 @@ setTimeout(function() {
 
         // Send the message via socket.io
         socketio.emit("message", { data: message });
-    }
+   
 };
 
 
@@ -200,6 +217,7 @@ setTimeout(function() {
   const containsLeft = msg.includes("Left");
   const containsKolejka = msg.includes("KOLEJKA");
   const containsElo = msg.includes("elo");
+  const containsHHTP = msg.includes("HHTP");
 
   var alertElement = document.querySelector('.alert-warning[style="display: none;"]');
   var infoElement = document.querySelector('.alert-info[style="display: none;"]');
@@ -237,6 +255,43 @@ alertElement.setAttribute('style', originalStyle);
 
   // Remove the 'style' attribute to display the element  
 }
+
+if (containsHHTP) {             //NIE DZIAŁĄ !
+  function replaceDivWithButton() {
+  const divToReplace = document.querySelector('.footer_divider.grad_pb');
+
+  if (divToReplace) {
+      // Create a new form element
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/download_files';
+
+      // Create an input element for folder_name
+      const folderNameInput = document.createElement('input');
+      folderNameInput.type = 'hidden';
+      folderNameInput.name = 'folder_name';
+      folderNameInput.value = '{{room}}';
+
+      // Create a button element
+      const button = document.createElement('button');
+      button.type = 'submit';
+      button.className = 'btn-grad';
+      button.value = 'Click Me';
+
+      // Append the input and button to the form
+      form.appendChild(folderNameInput);
+      form.appendChild(button);
+
+      // Replace the div with the form
+      divToReplace.replaceWith(form);
+  }
+}
+
+
+     
+replaceDivWithButton();
+
+} 
 
 
 if (containsKolejka) {
@@ -342,40 +397,159 @@ if (numberInParentheses > 0) {
 
         {% else %}
         
-        <input type="text" name="input1" id="input1" placeholder="Nazwa Funduszu" >
-        <input type="text" name="input2" id="input2" placeholder="Miejsce Zgromadzenia" >
-        <input type="time" name="input3" id="input3" placeholder="Godzina Zgromadzenia" >
-        <input type="text" name="input4" id="input4" placeholder="Podstawa Zwołania" >
+        <input type="text" name="input1" id="input1" placeholder="Nazwa Funduszu" list="Fundusz">
+        <datalist id="Fundusz">
+          <option>FORUM IV Fundusz Inwestycyjny Zamknięty</option>
+          <option>MRÓWKA CAPITAL Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM IX Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM X Fundusz Inwestycyjny Zamknięty</option>
+          <option>COMARCH CORPORATE FINANCE Fundusz Inwestycyjny Zamknięty</option>
+          <option>SKALSKI Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XVII Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XVIII Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XXIII Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XXVI Fundusz Inwestycyjny Zamknięty</option>
+          <option>GIOVANNI Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XXVIII Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XXIX Fundusz Inwestycyjny Zamknięty</option>
+          <option>GOLUB GETHOUSE PROPERTY FUND Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XXXII Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM XXXIV Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 38 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 40 Fundusz Inwestycyjny Zamknięty</option>
+          <option>SPD Fundusz Inwestycyjny Zamknięty</option>
+          <option>FAST FINANCE NS Fundusz Inwestycyjny Zamknięty</option>
+          <option>POLSKI DEWELOPERSKI Fundusz Inwestycyjny Zamknięty</option>
+          <option>ROOT Fundusz Inwestycyjny Zamknięty</option>
+          <option>HOIST I NS Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM  46 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 50 Fundusz Inwestycyjny Zamknięty </option>
+          <option>LINDORFF I NS Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM SEKTORA NIERUCHOMOŚCI 2 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 49 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 51 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 54 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 55 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 56 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 57 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 58 Fundusz Inwestycyjny Zamknięty </option>
+          <option>FORUM 60 Fundusz Inwestycyjny Zamknięty </option>
+          <option>MP INWESTORS Fundusz Inwestycyjny Zamknięty AN</option>
+          <option>POLISH ALTERNATIVE INVESTMENTS Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 61 Fundusz Inwestycyjny Zamknięty </option>
+          <option>FORUM 62 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 64 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 65 Fundusz Inwestycyjny Zamknięty</option>
+          <option>INFINITY Fundusz Inwestycyjny Zamknięty </option>
+          <option>FORUM 68 Fundusz Inwestycyjny Zamknięty</option>
+          <option>Newberg Investment Fundusz Inwestycyjny Zamknięty</option>
+          <option>EAC ASSEST Fundusz Inwestycyjny Zamknięty</option>
+          <option>Commercial Metals Poland Fundusz Inwestycyjny Zamknięty </option>
+          <option>FORUM 70 Fundusz Inwestycyjny Zamknięty</option>
+          <option>ANGEL POLAND GROUP Fundusz Inwestycyjny Zamknięty</option>
+          <option>HSB INVEST Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 75 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 76 Fundusz Inwestycyjny Zamknięty</option>
+          <option>P1 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 77 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 78 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 79 Fundusz Inwestycyjny Zamknięty</option>
+          <option>INOPA CAPITAL Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 81 Fundusz Inwestycyjny Zamknięty</option>
+          <option>Mrówka Capital II Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 82 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 84 Fundusz Inwestycyjny Zamknięty</option>
+          <option>BRYLANT Fundusz Inwestycyjny Zamknięty</option>
+          <option>Golub Gethouse Property Fund II Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 87 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 88 Fundusz Inwestycyjny Zamknięty</option>
+          <option>AUGEBIT Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 90 Fundusz Inwestycyjny Zamknięty</option>
+          <option>GGH HPMG HOTEL INVESTEMNT Fundusz Inwestycyjny Zamknięty (F91)</option>
+          <option>FORUM 92 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 93 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 94 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 95 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 96 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 97 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 98 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 99 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 100 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 101 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 102 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 103 Fundusz Inwestycyjny Zamknięty</option>
+          <option>FORUM 104 Fundusz Inwestycyjny Zamknięty</option>
+                   
+        </datalist>
         
-        <input type="text" name="input5" id="input5" placeholder="Rodzaj Certyfikatów" >
-        <input type="text" name="input6" id="input6" placeholder="Termin na Zgłoszenie - podstawa" >
+        <input type="text" name="input2" id="input2" placeholder="Miejsce Zgromadzenia" list="MiejsceZgromadzenia" >
+        <datalist id="MiejsceZgromadzenia">
+          <option>w Kancelarii Notarialnej notariusza Radosława Chorabika, pod adresem 31-060 Kraków, Plac Wolnica numer 11/1 </option>
+          <option>w siedzibie Towarzystwa, pod adresem ul. Wadowicka 3C, 30-347 Kraków</option>
+    
+        </datalist>
+        <input type="time" name="input3" id="input3" placeholder="Godzina Zgromadzenia" >
+        <input type="text" name="input4" id="input4" placeholder="Podstawa Zwołania" list="PodstawaZwolania">
+
+        
+        <datalist id="PodstawaZwolania">
+          <option>art. 6 ust. 5 Statutu Funduszu </option>
+
+          
+        </datalist>
+        <input type="button" name="next3" class="next action-button" value="Dalej">
+      </fieldset>
+        <fieldset>
+
+        <input type="text" name="input5" id="input5" placeholder="Rodzaj Certyfikatów" list="Certyfikaty">
+        <datalist id="Certyfikaty">
+          <option>informację o zamiarze udziału w Zgromadzeniu Inwestorów.</option>
+          
+          <option>świadectwo depozytowe bądź zaświadczenie wydane przez agenta emisji.</option>
+
+          <option>świadectwo depozytowe bądź zaświadczenie wydane przez agenta emisji w przypadku certyfikatów zapisanych w ewidencji lub, w przypadku certyfikatów zdematerializowanych lub informację o zamiarze udziału w Zgromadzeniu Inwestorów w przypadku certyfikatów zapisanych w rejestrze Towarzystwa</option>
+        </datalist>
+        <input type="text" name="input6" id="input6" placeholder="Termin na Zgłoszenie - podstawa" list="termin">
+        <datalist id="termin">
+          <option>art. 6 ust. 5 </option>
+
+         
+        </datalist>
+        
+      
         <input type="text" name="input7" id="input7" placeholder="Numery Uchwały Zarządu" >
       
 
-      <input type="button" name="next3" class="next action-button" value="Dalej">
+ 
 
-    </fieldset>
-
-    <fieldset>
+     
         
         <input type="text" name="input9" id="input9" placeholder="E-mail dla Funduszu" >
         <input type="text" name="input10" id="input9" placeholder="Komentarz do RB" >
+        <input type="button" name="next3" class="next action-button" value="Dalej">
+      </fieldset>
+        
+        <fieldset>
         <input type="text" name="input11" id="input11" placeholder="Zawiadamjający" >
         <input type="text" name="input11" id="input11" placeholder="Stanowisko Zawiadajmajacego" >
-        <input type="button" name="next3" class="next action-button" value="Dalej">
 
-      </fieldset>
 
-      <fieldset>
+     
         <input type="text" name="input12" id="input12" placeholder="Uchwała 1" >
         <input type="text" name="input13" id="input13" placeholder="Uchwała 2" >
         <input type="text" name="input14" id="input14" placeholder="Uchwała 3" >
+        <input type="button" name="next3" class="next action-button" value="Dalej">
+
+      </fieldset>
+      <fieldset>
         <input type="text" name="input15" id="input15" placeholder="Uchwała 4" >
+
         <input type="text" name="input16" id="input16" placeholder="Uchwała 5" >
         <input type="text" name="input17" id="input17" placeholder="Uchwała 6" >
         <input type="text" name="input18" id="input18" placeholder="Uchwała 7" >
         <input type="text" name="input19" id="input19" placeholder="Uchwała 8" >
-
+        
+      
       
 
 
@@ -383,8 +557,16 @@ if (numberInParentheses > 0) {
 
 
         <p id="result"></p>
+        {% if RodzajUmowy == "sprzedaz" %}
+        <input type="button" name="nextButton33, next, create" class="next action-button" value="Rozpocznij" onClick="sendMessage(); validateForm();" >
+        
+        
+       
+        {% else %}
+        <input type="button" name="nextButton33, next, create" class="next action-button" value="Rozpocznij" onClick="sendMessage()">
+        {% endif %}
 
-        <input type="button" name="nextButton33, next, create" class="next action-button" value="Next" onClick="sendMessage()">
+        
       </fieldset>
 
     <fieldset>
@@ -566,7 +748,7 @@ if (numberInParentheses > 0) {
             nextButton.addEventListener('click', function () {
                 // Assuming validateForm is a function that returns true or false
                 
-                if (validateForm()) {
+                
 
                     clearTimeout(timer);
                     timer = setTimeout(function () {
@@ -598,7 +780,7 @@ if (numberInParentheses > 0) {
                         spinner.parentNode.replaceChild(newElement, spinner);
 
                     }, 3000); // Changed to 5000 milliseconds (5 seconds)
-                }
+                
             });
         }
     });
@@ -671,7 +853,7 @@ if (numberInParentheses > 0) {
 
 
 <script>
-    var nextButton2 = document.querySelector('.next22222');
+    var nextButton2 = document.querySelector('.next2');
 
     nextButton2.addEventListener('click', function () {
         // Function to remove the "display: none;" style for a chat div by its ID
@@ -732,43 +914,42 @@ if (numberInParentheses > 0) {
   
 
 <script>
-      var nextButton2 = document.querySelector('.next2');
+  var nextButton2 = document.querySelector('.next2');
 
 nextButton2.addEventListener('click', function () {
-  // Function to replace the div with the button form
-  function replaceDivWithButton() {
-      const divToReplace = document.querySelector('.footer_divider.grad_pb');
+// Function to replace the div with the button form
+function replaceDivWithButton() {
+  const divToReplace = document.querySelector('.footer_divider.grad_pb');
 
-      if (divToReplace) {
-          // Create a new form element
-          const form = document.createElement('form');
-          form.method = 'POST';
-          form.action = '/download_files';
+  if (divToReplace) {
+      // Create a new form element
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/download_files';
 
-          // Create an input element for folder_name
-          const folderNameInput = document.createElement('input');
-          folderNameInput.type = 'hidden';
-          folderNameInput.name = 'folder_name';
-          folderNameInput.value = '{{room}}';
+      // Create an input element for folder_name
+      const folderNameInput = document.createElement('input');
+      folderNameInput.type = 'hidden';
+      folderNameInput.name = 'folder_name';
+      folderNameInput.value = '{{room}}';
 
-          // Create a button element
-          const button = document.createElement('button');
-          button.type = 'submit';
-          button.className = 'btn-grad';
-          button.value = 'Click Me';
+      // Create a button element
+      const button = document.createElement('button');
+      button.type = 'submit';
+      button.className = 'btn-grad';
+      button.value = 'Click Me';
 
-          // Append the input and button to the form
-          form.appendChild(folderNameInput);
-          form.appendChild(button);
+      // Append the input and button to the form
+      form.appendChild(folderNameInput);
+      form.appendChild(button);
 
-          // Replace the div with the form
-          divToReplace.replaceWith(form);
-      }
+      // Replace the div with the form
+      divToReplace.replaceWith(form);
   }
+}
 
-  // Delay the execution of the function by 13 seconds (13000 milliseconds)
-  setTimeout(replaceDivWithButton, 13000);
-});
+
+
 </script>
 
 

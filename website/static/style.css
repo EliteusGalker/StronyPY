@@ -1,3 +1,49 @@
+
+
+
+
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style the input field */
+#myInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Style the dropdown content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100%;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Style the suggestion items */
+.dropdown-content div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Highlight the selected suggestion */
+.dropdown-content div:hover {
+    background-color: #e9e9e9;
+}
+
+
+
+
+
+
+
+
+
 .demo10 {
     
     padding: 30px 0
@@ -5,7 +51,8 @@
 
 .pricingTable10 {
     text-align: center;
-    width: 190px;
+    max-width: 200px;
+    width: 30vw;
 }
 
 
@@ -176,7 +223,7 @@
 
 
     .pricingTable10 .pricingTable-header {
-        padding: 30px 0;
+        padding: 3vh 0;
         background: #4d4d4d;
         position: relative;
         transition: all .3s ease 0s
@@ -243,7 +290,7 @@
 }
 
     .pricingTable10 .pricing-content {
-        padding-top: 50px;
+        padding-top: 5vh;
         background: #fff;
         position: relative
     }
@@ -311,12 +358,12 @@
 
     .pricingTable10 .read {
         display: inline-block;
-        font-size: 16px;
+        font-size: 100%;
         color: #fff;
         text-transform: uppercase;
         background: #d9d9d8;
         padding: 8px 25px;
-        margin: 30px 0;
+        margin: 13% 0;
         transition: all .3s ease 0s
     }
 
@@ -338,17 +385,18 @@
 /*form styles*/
 #msform {
 	width: 400px;
-	
+    max-width: 61vh;
 	margin: 12% auto;
 	text-align: center;
-	scale: 1.2;
+	scale: 1.1;
+    max-height: 67vh;
 }
 #msform fieldset {
 	background: white;
 	border: 0 none;
 	border-radius: 3px;
 	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
+	padding: 2vh 30px;
 	box-sizing: border-box;
 	width: 80%;
 	margin: 0 10%;
@@ -362,10 +410,10 @@
 }
 /*inputs*/
 #msform input, #msform textarea {
-	padding: 15px;
+	padding: 1.7vh;
 	border: 1px solid #ccc;
 	border-radius: 3px;
-	margin-bottom: 10px;
+	margin-bottom: 1.5vh;
 	width: 100%;
 	box-sizing: border-box;
 	font-family: montserrat;
@@ -382,7 +430,7 @@
 	border-radius: 1px;
 	cursor: pointer;
 	padding: 10px;
-	margin: 10px 5px;
+	margin: 0px 5px;
   text-decoration: none;
   font-size: 14px;
 }
@@ -681,6 +729,7 @@ scale: 1.4;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
+    max-height: 66vh;
 }
 
 
